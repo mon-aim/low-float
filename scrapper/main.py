@@ -28,9 +28,6 @@ def scrape_info():
 
     info = {}
 
-    # header = tables[2].find_all('tr')[0].find_all('td')
-    # info['header'] = list(map(lambda x: x.text.strip(), header))
-
     last_update = tables[0].find_all('tr')[-1].text
     last_update = re.search(r'on\s(.+)', last_update).group(1)
     info['last_update'] = datetime.strptime(last_update, '%B %d, %Y').__str__()
@@ -43,8 +40,6 @@ def scrape_info():
 
 def scrape_table(page):
     response = requests.get(f'{HOST}/all/{page}', HEADERS)
-    # with open('page.html') as f:
-    #     soup = BeautifulSoup(f.read(), 'html.parser')
     soup = BeautifulSoup(response.text, 'html.parser')
     tables: List[Tag] = soup.find_all('table')
     table = tables[2]
@@ -60,10 +55,6 @@ def scrape_table(page):
 def main():
 
     info = scrape_info()
-    # all_stocks = info['all_stocks']
-    # last_update = info['last_update']
-    # header = info['header']
-    # row_per_page = 50
 
     with open(f'scrape.json', 'w') as f:
         for i in range(1, 2):
