@@ -29,8 +29,9 @@ def scrape_info():
     info = {}
 
     header = tables[2].find_all('tr')[0].find_all('td')
-    header = list(map(lambda x: x.text.strip(), header))
-    info['columns'] = header
+    # header = list(map(lambda x: x.text.strip(), header))
+
+    info['columns'] = [{'title': th.text.strip()} for th in header]
 
     last_update = tables[0].find_all('tr')[-1].text
     last_update = re.search(r'on\s(.+)', last_update).group(1)
@@ -48,8 +49,8 @@ def scrape_table(page):
     tables: List[Tag] = soup.find_all('table')
     table = tables[2]
 
-    header = table.find_all('tr')[0].find_all('td')
-    header = list(map(lambda x: x.text.strip(), header))
+    # header = table.find_all('tr')[0].find_all('td')
+    # header = list(map(lambda x: x.text.strip(), header))
 
     trs = table.find_all('tr')
 
@@ -60,10 +61,15 @@ def scrape_table(page):
 def main():
 
     info = scrape_info()
-
+    added_rows = 0
+    content = {'data': [], **info}
     with open(f'../scrape.json', 'w') as f:
-        for i in range(1, 2):
-            json.dump({'data': scrape_table(i), **info}, f, indent=4)
+        while added_rows < info['all_stocks']:
+            data = scrape_table(added_rows + 1)
+            content['data'].extend(data)
+            added_rows += len(data)
+            print(f'{added_rows} / {info["all_stocks"]} row has been added')
+        json.dump(content, f, indent=4)
 
 
 if __name__ == '__main__':

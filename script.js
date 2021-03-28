@@ -1,33 +1,32 @@
 $(document).ready(function() {
-    var dataset = ["["];
-
-    $.getJSON("objects.json", function( data ) {
-
+    var dataset = [];
+    $.getJSON("scrape.json", function( data ) {
+              
         $.each( data, function( key, val ) {
+            var row =[];
+            row.push(val.Ticker);
+            row.push(val.Company);
+            row.push(val.Exchange);
+            row.push(val.Float);
+            row.push(val.Outstd);
+            row.push(val.ShortInt);
+            row.push(val.Industry);
 
-            dataset += '[';
-            dataset +=" '"+val.name+"',";
-            dataset += " '"+val.position+"',";
-            dataset += " '"+val.office+"',";
-            dataset += " '"+val.extn+"',";
-            dataset += " '"+val.start_date+"',";
-            dataset += " '"+val.salary+"'";
-            dataset += '],'; 
-
+            dataset.push(row);
         });
-        dataset= dataset.slice(0, -1);
-        dataset += ']';
-            console.log(dataset);
 
             $('#example').DataTable({
 data: dataset,
 columns: [
-    { title: "Name" },
-    { title: "Position" },
-    { title: "Office" },
-    { title: "Extn." },
-    { title: "Start date" },
-    { title: "Salary" }]
+    { title:  "Ticker"},
+    { title:   "Company"},
+    { title:   "Exchange"},
+    { title:  "Float"},
+    { title:  "Outstd"},
+    { title:  "ShortInt"},
+    { title:  "Industry"}
+    
+    ]
 
 });
          
