@@ -53,7 +53,8 @@ def scrape_table(page):
 
     trs = table.find_all('tr')
 
-    return [dict(zip(header, [td.text.strip() for td in tds])) for index, tr in enumerate(trs) if index > 0 and len(tds := tr.find_all('td')) > 1]
+    return [[td.text.strip() for td in tds] for index, tr in enumerate(trs) if index > 0 and len(tds := tr.find_all('td')) > 1]
+    # return [dict(zip(header, [td.text.strip() for td in tds])) for index, tr in enumerate(trs) if index > 0 and len(tds := tr.find_all('td')) > 1]
 
 
 def main():
