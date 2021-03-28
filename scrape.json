@@ -1,5 +1,4 @@
-{
-    "data": [
+[
         {
             "Ticker": "DIT",
             "Company": "Amcon Distributing Co",
@@ -450,16 +449,5 @@
             "ShortInt": "0.20%",
             "Industry": "Oil & Gas Operations"
         }
-    ],
-    "columns": [
-        "Ticker",
-        "Company",
-        "Exchange",
-        "Float",
-        "Outstd",
-        "ShortInt",
-        "Industry"
-    ],
-    "last_update": "2021-03-26 00:00:00",
-    "all_stocks": 594
-}
+    ]
+
