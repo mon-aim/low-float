@@ -16,18 +16,9 @@ $(document).ready(function() {
         });
 
             $('#example').DataTable({
-data: dataset,
-columns: [
-    { title:  "Ticker"},
-    { title:   "Company"},
-    { title:   "Exchange"},
-    { title:  "Float"},
-    { title:  "Outstd"},
-    { title:  "ShortInt"},
-    { title:  "Industry"}
+data: data.data,
+columns: data.columns
     
-    ]
-
 });
          
           
