@@ -62,12 +62,14 @@ def main():
 
     info = scrape_info()
     added_rows = 0
+    page = 1
     content = {'data': [], **info}
     with open(f'../scrape.json', 'w') as f:
         while added_rows < info['all_stocks']:
-            data = scrape_table(added_rows + 1)
+            data = scrape_table(page)
             content['data'].extend(data)
             added_rows += len(data)
+            page += 1
             print(f'{added_rows} / {info["all_stocks"]} row has been added')
         json.dump(content, f, indent=4)
 
