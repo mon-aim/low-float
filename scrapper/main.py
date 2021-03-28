@@ -28,6 +28,10 @@ def scrape_info():
 
     info = {}
 
+    header = tables[2].find_all('tr')[0].find_all('td')
+    header = list(map(lambda x: x.text.strip(), header))
+    info['columns'] = header
+
     last_update = tables[0].find_all('tr')[-1].text
     last_update = re.search(r'on\s(.+)', last_update).group(1)
     info['last_update'] = datetime.strptime(last_update, '%B %d, %Y').__str__()
@@ -56,7 +60,7 @@ def main():
 
     info = scrape_info()
 
-    with open(f'scrape.json', 'w') as f:
+    with open(f'../scrape.json', 'w') as f:
         for i in range(1, 2):
             json.dump({'data': scrape_table(i), **info}, f, indent=4)
 
